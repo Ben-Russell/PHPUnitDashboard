@@ -14,7 +14,7 @@ if [ $# -eq 0 ]
 
         "${app_path}/vendor/bin/phpunit" -v \
             -c "${app_path}/phpunit.xml" \
-            --log-junit "${dashboard_path}/junit.xml" \
+            --log-junit "${dashboard_path}/junit_results.xml" \
             > "${dashboard_path}/output.txt"
 
     else
@@ -23,7 +23,7 @@ if [ $# -eq 0 ]
         "${app_path}/vendor/bin/phpunit" -v \
             --filter $1 \
             -c "${app_path}/phpunit.xml" \
-            --log-junit "${dashboard_path}/junit_single.xml" \
+            --log-junit "${dashboard_path}/junit_results_single.xml" \
             > "${dashboard_path}/output_single.txt"
 
 fi
