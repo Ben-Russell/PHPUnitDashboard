@@ -4,48 +4,44 @@
 
     <xsl:template match="/testsuites">
         <!-- <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text> -->
-
-                    <xsl:apply-templates select="testsuite" />
-
+        <xsl:apply-templates select="testsuite"/>
     </xsl:template>
 
     <xsl:template match="testsuite">
         <xsl:variable name="testsuite" select="@name"/>
-        <div class="testsuite" role="tablist" aria-multiselectable="true"
+        <div class="testsuite m-y-2" role="tablist" aria-multiselectable="true"
              data-suitename="{@name}"
              data-tests="{@tests}"
              data-failures="{@failures}"
              data-errors="{@errors}">
             <div class="card">
                 <div class="card-header" role="tab">
-                    <a class="collapser" href="" data-toggle="collapse">
-                        <h6>
-                            Testsuite: <xsl:value-of select="@name" />
-                            <xsl:text>Tests run: </xsl:text>
-                            <xsl:value-of select="@tests" />
-                            <xsl:text>, Failures: </xsl:text>
-                            <xsl:value-of select="@failures" />
-                            <xsl:text>, Errors: </xsl:text>
-                            <xsl:value-of select="@errors" />
-                            <xsl:text>, Time elapsed: </xsl:text>
-                            <xsl:value-of select="@time" />
-                            <xsl:text> sec</xsl:text>
-                            &#160;
-                            <button class="btn btn-primary btn-sm test-rerun"
-                                    data-testname="{@name}"
-                                    data-istestsuite="true">Re-run Test</button>
-                        </h6>
+                    <a class="collapser text-white" style="text-decoration: none;" href="" data-toggle="collapse">
+                        Test Suite:
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Tests run: </xsl:text>
+                        <xsl:value-of select="@tests"/>
+                        <xsl:text>, Failures: </xsl:text>
+                        <xsl:value-of select="@failures"/>
+                        <xsl:text>, Errors: </xsl:text>
+                        <xsl:value-of select="@errors"/>
+                        <xsl:text>, Time elapsed: </xsl:text>
+                        <xsl:value-of select="@time"/>
+                        <xsl:text> sec</xsl:text>
+                        &#160;
+                        <button class="btn btn-primary btn-sm test-rerun float-right"
+                                data-testname="{@name}"
+                                data-istestsuite="true">Re-run Test
+                        </button>
                     </a>
                 </div>
                 <div class="collapse" role="tabpanel">
                     <div class="card-block">
-                        <xsl:apply-templates select="testsuite" />
-
-
-                        <xsl:apply-templates select="system-out" />
-                        <xsl:apply-templates select="system-err" />
+                        <xsl:apply-templates select="testsuite"/>
+                        <xsl:apply-templates select="system-out"/>
+                        <xsl:apply-templates select="system-err"/>
                         <xsl:apply-templates select="testcase">
-                            <xsl:with-param name="testsuite" select="@name" />
+                            <xsl:with-param name="testsuite" select="@name"/>
                         </xsl:apply-templates>
 
                     </div>
@@ -59,19 +55,19 @@
     <xsl:template match="testcase">
         <xsl:param name="testsuite"/>
         <div class="testcase" data-testname="{$testsuite}::{@name}">
-
             <p>
                 <xsl:text>
-                Testcase: </xsl:text>
-                <xsl:value-of select="@name" />
+                Test Case: </xsl:text>
+                <xsl:value-of select="@name"/>
                 <xsl:text> took </xsl:text>
-                <xsl:value-of select="@time" />
+                <xsl:value-of select="@time"/>
                 &#160;
-                <button class="btn btn-primary btn-sm test-rerun"
-                        data-testname="{$testsuite}::{@name}">Re-run Test</button>
+                <button class="btn btn-primary btn-sm test-rerun float-right"
+                        data-testname="{$testsuite}::{@name}">Re-run Test
+                </button>
             </p>
-            <xsl:apply-templates select="failure" />
-            <xsl:apply-templates select="error" />
+            <xsl:apply-templates select="failure"/>
+            <xsl:apply-templates select="error"/>
         </div>
     </xsl:template>
 
@@ -81,13 +77,13 @@
                 <xsl:text>
                     Failure:
                 </xsl:text>
-                <xsl:value-of select="@type" />
+                <xsl:value-of select="@type"/>
             </span>
             <pre class="failure-output">
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </pre>
             <div class="preview-output" data-processed="false">
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </div>
         </div>
     </xsl:template>
@@ -98,10 +94,10 @@
                 <xsl:text>
                     Error:
                 </xsl:text>
-                <xsl:value-of select="@type" />
+                <xsl:value-of select="@type"/>
             </span>
             <pre>
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </pre>
         </div>
     </xsl:template>
@@ -112,7 +108,7 @@
             ------ Standard output ------
             </xsl:text>
             <pre>
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </pre>
         </div>
     </xsl:template>
@@ -123,7 +119,7 @@
             ------ Error output ------
             </xsl:text>
             <pre>
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </pre>
         </div>
     </xsl:template>

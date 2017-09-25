@@ -2,8 +2,7 @@
  * Created by brussell on 5/22/2017.
  */
 
-(function() {
-
+(function () {
     var runningtest = false;
     var $spinner;
 
@@ -17,18 +16,16 @@
     }
 
     function LoadReport(data) {
-
-        var $testset  = $('<div/>', { 'class': 'testset'}).html(data);
+        var $testset = $('<div/>', {'class': 'testset'}).html(data);
         $('#Tests').append($testset);
         BindTestEvents();
         SetupPreviews();
-
     }
 
     function LoadSingleReport(data, istestsuite) {
-        $(data).find('.testsuite').each(function() {
+        $(data).find('.testsuite').each(function () {
             var $newsuite = $(this);
-            if(istestsuite) {
+            if (istestsuite) {
                 var suitename = $newsuite.attr('data-suitename');
                 // If we ran a full test suite replace the whole suite
                 var $oldsuite = $('.testsuite[data-suitename="' + suitename + '"]').html($newsuite.html());
@@ -41,7 +38,7 @@
             }
             else {
                 // Otherwise replace each individual test
-                $newsuite.find('.testcase').each(function() {
+                $newsuite.find('.testcase').each(function () {
                     var testname = $(this).attr('data-testname');
 
                     $('.testcase[data-testname="' + testname + '"]').html($(this).html());
@@ -49,11 +46,10 @@
             }
         });
         SetupPreviews();
-
     }
 
     function FailReport(data) {
-        var $errorset = $('<div/>', { 'class': 'errorset'}).html("Error: " + data.responseText);
+        var $errorset = $('<div/>', {'class': 'errorset'}).html("Error: " + data.responseText);
         $('#Tests').append($errorset);
         console.log('ReportFailed:', data);
         GetReport();
@@ -66,15 +62,14 @@
 
     function GetSingleReport(istestsuite) {
         $.get('testsreport.php?single=single')
-            .done(function(data) {
+            .done(function (data) {
                 LoadSingleReport(data, istestsuite);
             });
     }
 
 
-
     function RunTest(path) {
-        if(runningtest) {
+        if (runningtest) {
             return;
         }
 
@@ -83,7 +78,7 @@
         $.get(path)
             .done(GetReport)
             .fail(FailReport)
-            .always(function() {
+            .always(function () {
                 runningtest = false;
                 $spinner.hide();
             });
@@ -91,7 +86,7 @@
     }
 
     function RunSingleTest(testname, button) {
-        if(runningtest) {
+        if (runningtest) {
             return;
         }
 
@@ -101,7 +96,7 @@
         $(button).addClass('spinning');
 
         $.get('runtests.php?filter=' + testname)
-            .always(function() {
+            .always(function () {
                 GetSingleReport(istestsuite);
                 runningtest = false;
                 $(button).removeClass('spinning');
@@ -110,7 +105,7 @@
 
     function BindTestEvents() {
         var suite = 0;
-        $('.testsuite').each(function() {
+        $('.testsuite').each(function () {
             var $this = $(this);
             var index = suite++;
 
@@ -119,7 +114,7 @@
     }
 
     function SetupPreviews() {
-        $('.preview-output[data-processed="false"]').each(function() {
+        $('.preview-output[data-processed="false"]').each(function () {
             SetupPreview($(this));
         });
     }
@@ -133,7 +128,7 @@
         var openIndexBody = output.indexOf('<body>');
         var closeIndexBody = output.indexOf('</body>');
 
-        if(openIndexHead >= 0 && closeIndexHead >= 0 && openIndexBody >= 0 && closeIndexBody >= 0) {
+        if (openIndexHead >= 0 && closeIndexHead >= 0 && openIndexBody >= 0 && closeIndexBody >= 0) {
             var outputhead = output.substring(openIndexHead, closeIndexHead + 7);
             var outputbody = output.substring(openIndexBody, closeIndexBody + 7);
 
@@ -152,12 +147,12 @@
                 .html(outputbody);
 
 
-            $iframe.contents().find('link').each(function() {
+            $iframe.contents().find('link').each(function () {
                 var $this = $(this);
                 $iframe.contents().find('head').append('<link rel="stylesheet" href="' + env.localpath + $this.attr('href') + '">');
             });
 
-            $iframe.contents().find('img').each(function() {
+            $iframe.contents().find('img').each(function () {
                 var $this = $(this);
                 $this.attr('src', env.localpath + $this.attr('src'));
             });
@@ -192,39 +187,43 @@
         var failures = $suite.attr('data-failures');
         var errors = $suite.attr('data-errors');
 
-        if(failures != "0" || errors != "0") {
+        if (errors != "0") {
             $cardheader.addClass('bg-danger').addClass('text-white');
+        } else if (failures != "0") {
+            $cardheader.addClass('bg-warning').addClass('text-white');
+        } else {
+            $cardheader.addClass('bg-success').addClass('text-white');
         }
 
     }
 
     function BindEvents() {
-        $('#RunTests').on('click', function() {
+        $('#RunTests').on('click', function () {
             RunTest('runtests.php');
         });
 
-        $('#RunTestsWCoverage').on('click', function() {
+        $('#RunTestsWCoverage').on('click', function () {
             RunTest('runtestswcoverage.php');
         });
 
-        $('#Tests').on('click', '.test-rerun', function(e) {
-            RunSingleTest( $(this).attr('data-testname'), e.target );
+        $('#Tests').on('click', '.test-rerun', function (e) {
+            RunSingleTest($(this).attr('data-testname'), e.target);
         });
 
-        $('#JumpToFirst').on('click', function(e) {
+        $('#JumpToFirst').on('click', function (e) {
             var $first = null;
             var $suites = $('.testset > .testsuite .testsuite');
 
-            for(var i=0, iL=$suites.length; i<iL; i++) {
+            for (var i = 0, iL = $suites.length; i < iL; i++) {
                 var $this = $suites.eq(i);
-                if($this.attr('data-failures') !== "0" || $this.attr('data-errors') !== "0") {
+                if ($this.attr('data-failures') !== "0" || $this.attr('data-errors') !== "0") {
                     $first = $this;
                     break;
                 }
             }
 
-            if($first !== null) {
-              //  $('.testset > .testsuite > .card > .card-header > .collapser').collapse('show');
+            if ($first !== null) {
+                //  $('.testset > .testsuite > .card > .card-header > .collapser').collapse('show');
                 $first.find('.collapse').collapse('show');
 
                 window.scrollTo(0, $first.offset().top);
@@ -236,7 +235,7 @@
     }
 
 
-    $(function() {
+    $(function () {
         OnPageLoad();
     });
 })();
