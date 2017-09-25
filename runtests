@@ -1,0 +1,32 @@
+#!/bin/bash
+# run phpunit tests
+
+set -e;
+
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+source "$DIR/env.config"
+
+if [ $# -eq 0 ]
+    then
+
+        # No arguments passed
+
+        "${app_path}/vendor/bin/phpunit" -v \
+            -c "${app_path}/phpunit.xml" \
+            --log-junit "${dashboard_path}/junit.xml" \
+            > "${dashboard_path}/output.txt"
+
+    else
+        # An argument is passed
+
+        "${app_path}/vendor/bin/phpunit" -v \
+            --filter $1 \
+            -c "${app_path}/phpunit.xml" \
+            --log-junit "${dashboard_path}/junit_single.xml" \
+            > "${dashboard_path}/output_single.txt"
+
+fi
+
+
+echo "Done";

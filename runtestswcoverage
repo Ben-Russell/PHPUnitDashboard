@@ -1,0 +1,30 @@
+#!/bin/bash
+# run phpunit tests
+
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+. "$DIR/env.config"
+
+# xdebugon=0;
+
+#if  php -m -c | grep --quiet 'Xdebug'
+#    then
+#        :
+#    else
+#        xdebugon=1;
+#        phpenmod xdebug;
+#fi
+
+      "${app_path}/vendor/bin/phpunit" -v \
+        -c "${app_path}/phpunit.xml" \
+        --coverage-html "${coverage_path}" \
+        --log-junit "${dashboard_path}/junit.xml" \
+        > "${dashboard_path}/output.txt"
+
+
+#if [ $xdebugon -eq 1 ]
+#    then
+#        phpdismod xdebug;
+#fi
+
+echo "Done";
