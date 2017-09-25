@@ -15,7 +15,7 @@ if (!file_exists($resultsxml)) {
     exit();
 }
 
-$xml->load($resultxml);
+$xml->load($resultsxml);
 
 $xsl = new DOMDocument();
 $xsl->load('junit.xsl');
