@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>PHPUnit Test Results</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
-    <link rel="stylesheet" href="junit.css" />
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
     <style>
         html, body {
             margin-top: 10px;
@@ -17,49 +16,69 @@
         .failure, .error {
             padding: 0px 20px;
         }
+
         .failure pre, .error pre {
             border: 1px solid #DDD;
             padding: 10px;
         }
 
         #Spinner {
-            display:none;
+            display: none;
         }
+
         .spinning:after {
             content: url('spinner.gif');
         }
 
         .failure-output {
-            max-height:400px;
-            overflow:auto;
+            max-height: 400px;
+            overflow: auto;
         }
+
         .preview-output {
-            display:none;
+            display: none;
         }
+
         .preview-iframe {
-            width:900px;
-            height:500px;
+            width: 900px;
+            height: 500px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div>
-        <button id="JumpToFirst" class="btn btn-default">Jump to First E/F</button>
+    <p>
+    <div class="col">
+        <button id="JumpToFirst" class="btn btn-warning">Jump to First E/F</button>
     </div>
-    <br />
-    <div id="Tests" class="col-md-12"></div>
-    <br />
-    <img id="Spinner" src="spinner.gif" />
-    <button id="RunTests" class="btn btn-default">Run Tests Again</button>
-    <button id="RunTestsWCoverage" class="btn btn-default">Run Tests With Coverage</button>
-    <a id="OpenCoverage" class="btn btn-default" href="#">Open Coverage</a>
+    </p>
+    <p>
+    <div id="Tests" class="col"></div>
+    </p>
+    <div class="row">
+        <div class="col"><img id="Spinner" src="spinner.gif"/></div>
+        <div class="col"><input type="text" class="form-control" id="runTestName"/></div>
+        <div class="col">
+            <button id="runTestByName" class="btn btn-primary">Run Specific Test</button>
+        </div>
+        <div class="col">
+            <button id="RunTests" class="btn btn-primary">Run All Tests Again</button>
+        </div>
+        <div class="col">
+            <button id="RunTestsWCoverage" class="btn btn-primary">Run Tests With Coverage</button>
+        </div>
+        <div class="col"><a id="OpenCoverage">
+            <button type="button" class="btn btn-info">Open Coverage</button>
+        </a></div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
 <script src="env.js"></script>
 <script src="phpunit.js"></script>
 </body>
